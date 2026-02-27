@@ -53,6 +53,7 @@
             margin-right: auto;
             height: 300px; /* Base height */
             max-height: 400px;
+            cursor: pointer;
         }
 
         @media (min-width: 768px) {
@@ -119,21 +120,21 @@
             
             <!-- Key Metrics Grid -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-white p-6 rounded-xl border border-stone-200 shadow-sm flex items-center gap-4">
+                <div onclick="navigateToTab('companies')" class="bg-white p-6 rounded-xl border border-stone-200 shadow-sm flex items-center gap-4 cursor-pointer hover:border-teal-300 hover:shadow-md transition-all duration-200">
                     <div class="p-3 bg-teal-50 text-teal-700 rounded-lg text-2xl">🏢</div>
                     <div>
                         <p class="text-sm font-medium text-stone-500">Companies Tracked</p>
                         <p class="text-2xl font-bold text-stone-900" id="stat-companies">0</p>
                     </div>
                 </div>
-                <div class="bg-white p-6 rounded-xl border border-stone-200 shadow-sm flex items-center gap-4">
+                <div onclick="navigateToTab('boards')" class="bg-white p-6 rounded-xl border border-stone-200 shadow-sm flex items-center gap-4 cursor-pointer hover:border-indigo-300 hover:shadow-md transition-all duration-200">
                     <div class="p-3 bg-indigo-50 text-indigo-700 rounded-lg text-2xl">📋</div>
                     <div>
                         <p class="text-sm font-medium text-stone-500">Job Boards</p>
                         <p class="text-2xl font-bold text-stone-900" id="stat-boards">0</p>
                     </div>
                 </div>
-                <div class="bg-white p-6 rounded-xl border border-stone-200 shadow-sm flex items-center gap-4">
+                <div onclick="navigateToTab('communities')" class="bg-white p-6 rounded-xl border border-stone-200 shadow-sm flex items-center gap-4 cursor-pointer hover:border-amber-300 hover:shadow-md transition-all duration-200">
                     <div class="p-3 bg-amber-50 text-amber-700 rounded-lg text-2xl">🤝</div>
                     <div>
                         <p class="text-sm font-medium text-stone-500">Communities</p>
@@ -157,7 +158,7 @@
                     </div>
                 </div>
                 <div class="mt-4 text-xs text-center text-stone-400">
-                    Source: Aggregated internal research data
+                    Source: Aggregated internal research data. Click a segment to explore.
                 </div>
             </div>
 
@@ -173,7 +174,7 @@
                     </div>
                 </div>
                 <div class="mt-4 p-3 bg-stone-50 border border-stone-200 rounded-lg text-xs text-center text-stone-600">
-                    <strong>📊 Data Insight:</strong> Want to know which boards actually lead to interviews? Check out the <a href="https://huntr.co/blog/best-job-search-sites-2026" target="_blank" rel="noopener noreferrer" class="text-teal-600 font-bold hover:text-teal-800 hover:underline transition-colors">2026 Top Job Search Sites by Conversion Rate</a>.
+                    <strong>📊 Data Insight:</strong> Click a bar to explore that board type. Want to know which boards actually lead to interviews? Check out the <a href="https://huntr.co/blog/best-job-search-sites-2026" target="_blank" rel="noopener noreferrer" class="text-teal-600 font-bold hover:text-teal-800 hover:underline transition-colors">2026 Top Job Search Sites by Conversion Rate</a>.
                 </div>
             </div>
         </section>
@@ -572,6 +573,24 @@
             filterAndRender();
         };
 
+        // --- NAVIGATE TO EXPLORER ---
+        function navigateToExplorer(tab, searchTerm) {
+            switchTab(tab);
+            searchQuery = searchTerm.toLowerCase();
+            els.search.value = searchTerm;
+            filterAndRender();
+            document.getElementById('explorer').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // --- NAVIGATE TO TAB (from stat cards) ---
+        function navigateToTab(tab) {
+            switchTab(tab);
+            searchQuery = '';
+            els.search.value = '';
+            filterAndRender();
+            document.getElementById('explorer').scrollIntoView({ behavior: 'smooth' });
+        }
+
         // --- CHARTS ---
         function renderCharts() {
             // Process Data for Industry Chart
@@ -582,11 +601,12 @@
                 industries[key] = (industries[key] || 0) + 1;
             });
 
+            const industryLabels = Object.keys(industries);
             const industryCtx = document.getElementById('industryChart').getContext('2d');
-            new Chart(industryCtx, {
+            const industryChart = new Chart(industryCtx, {
                 type: 'doughnut',
                 data: {
-                    labels: Object.keys(industries),
+                    labels: industryLabels,
                     datasets: [{
                         data: Object.values(industries),
                         backgroundColor: [
@@ -605,6 +625,12 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
+                    onClick: (evt, elements) => {
+                        if (elements.length > 0) {
+                            const label = industryLabels[elements[0].index];
+                            navigateToExplorer('companies', label);
+                        }
+                    },
                     plugins: {
                         legend: { position: 'right', labels: { boxWidth: 12, font: { size: 10 } } },
                         tooltip: { backgroundColor: '#1c1917', padding: 12 } // stone-900
@@ -620,11 +646,12 @@
                 types[key] = (types[key] || 0) + 1;
             });
 
+            const typeLabels = Object.keys(types);
             const boardCtx = document.getElementById('boardTypeChart').getContext('2d');
-            new Chart(boardCtx, {
+            const boardTypeChart = new Chart(boardCtx, {
                 type: 'bar',
                 data: {
-                    labels: Object.keys(types),
+                    labels: typeLabels,
                     datasets: [{
                         label: 'Count',
                         data: Object.values(types),
@@ -636,6 +663,12 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
+                    onClick: (evt, elements) => {
+                        if (elements.length > 0) {
+                            const label = typeLabels[elements[0].index];
+                            navigateToExplorer('boards', label);
+                        }
+                    },
                     scales: {
                         y: { beginAtZero: true, grid: { color: '#f5f5f4' } },
                         x: { grid: { display: false } }
