@@ -51,14 +51,41 @@
             max-width: 600px; /* Constraint for large screens */
             margin-left: auto;
             margin-right: auto;
-            height: 300px; /* Base height */
-            max-height: 400px;
+            height: 280px; /* Mobile-first base height */
             cursor: pointer;
+        }
+
+        /* Bar chart needs more width on desktop to fit many x-axis labels */
+        .chart-container-bar {
+            max-width: 100%;
+        }
+
+        /* Doughnut chart needs more height on mobile since legend goes below */
+        .chart-container-doughnut {
+            height: 320px;
+        }
+
+        @media (min-width: 640px) {
+            .chart-container {
+                height: 320px;
+            }
+            .chart-container-doughnut {
+                height: 350px;
+            }
+            .chart-container-bar {
+                height: 360px;
+            }
         }
 
         @media (min-width: 768px) {
             .chart-container {
                 height: 350px;
+            }
+            .chart-container-doughnut {
+                height: 350px;
+            }
+            .chart-container-bar {
+                height: 400px;
             }
         }
 
@@ -99,7 +126,7 @@
                     <h1 class="text-xl font-bold tracking-tight text-stone-900">Remote Work Navigator</h1>
                 </div>
                 <div class="text-sm text-stone-500 hidden sm:block">
-                    Comprehensive Resource for Remote Seekers
+                    Comprehensive Resource for Remote Job Seekers
                 </div>
             </div>
         </header>
@@ -110,10 +137,10 @@
         <!-- Section 1: Introduction & Stats -->
         <section class="space-y-6">
             <div class="max-w-3xl">
-                <h2 class="text-3xl font-bold text-stone-900">The Landscape of Remote Work</h2>
+                <h2 class="text-3xl font-bold text-stone-900">Best Remote Job Boards and Resources for 2026</h2>
                 <p class="mt-4 text-lg text-stone-600 leading-relaxed">
-                    We have compiled a curated dataset of remote-first companies, specialized job boards, and supportive communities. 
-                    This interactive dashboard transforms raw research into actionable insights. Use the visualizations below to understand 
+                    We have compiled a curated dataset of remote-first companies, specialized job boards, and supportive communities.
+                    This interactive dashboard transforms raw research into actionable insights. For a comprehensive, <a href="https://huntr.co/blog/best-job-search-sites-2026" target="_blank" rel="noopener noreferrer" class="text-teal-600 hover:text-teal-700 underline font-medium">data-backed list of the best job boards</a>, check out our latest research. Use the visualizations below to understand
                     where the opportunities lie, then use the <strong>Data Explorer</strong> further down to find your next role.
                 </p>
             </div>
@@ -145,15 +172,15 @@
         </section>
 
         <!-- Section 2: Visual Insights -->
-        <section class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8">
             <!-- Chart 1: Industries -->
-            <div class="bg-white p-6 rounded-xl border border-stone-200 shadow-sm flex flex-col">
+            <div class="bg-white p-4 sm:p-6 rounded-xl border border-stone-200 shadow-sm flex flex-col">
                 <div class="mb-4">
                     <h3 class="text-lg font-semibold text-stone-900">Remote Opportunity Distribution</h3>
                     <p class="text-sm text-stone-500">Breakdown of tracked companies by primary industry.</p>
                 </div>
                 <div class="flex-grow flex items-center justify-center w-full">
-                    <div class="chart-container">
+                    <div class="chart-container chart-container-doughnut">
                         <canvas id="industryChart"></canvas>
                     </div>
                 </div>
@@ -163,13 +190,13 @@
             </div>
 
             <!-- Chart 2: Board Types -->
-            <div class="bg-white p-6 rounded-xl border border-stone-200 shadow-sm flex flex-col">
+            <div class="bg-white p-4 sm:p-6 rounded-xl border border-stone-200 shadow-sm flex flex-col">
                 <div class="mb-4">
                     <h3 class="text-lg font-semibold text-stone-900">Job Board Ecosystem</h3>
                     <p class="text-sm text-stone-500">Types of platforms available for job seekers.</p>
                 </div>
                 <div class="flex-grow flex items-center justify-center w-full">
-                    <div class="chart-container">
+                    <div class="chart-container chart-container-bar">
                         <canvas id="boardTypeChart"></canvas>
                     </div>
                 </div>
@@ -212,6 +239,18 @@
                     
                     <!-- Companies View -->
                     <div id="view-companies" class="block">
+                        <!-- Strategic Tool Placement -->
+                        <div class="m-6 mb-0 bg-gradient-to-r from-teal-50 to-emerald-50 border border-teal-200 rounded-xl p-5 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 shadow-sm">
+                            <div>
+                                <h4 class="text-lg font-bold text-teal-900 flex items-center gap-2"><span>🎯</span> Maximize Your Callback Rate</h4>
+                                <p class="text-sm text-teal-700 mt-1 max-w-2xl">Don't just blindly apply on these boards. Match your experience perfectly to the job description requirements using our data-backed tools.</p>
+                            </div>
+                            <div class="flex flex-wrap gap-3 flex-shrink-0 w-full lg:w-auto">
+                                <a href="https://huntr.co/product/resume-tailor" target="_blank" rel="noopener noreferrer" class="flex-1 lg:flex-none text-center px-4 py-2 bg-white text-teal-700 font-bold text-sm rounded-md border border-teal-200 hover:bg-teal-50 hover:border-teal-300 transition-all shadow-sm">Try Resume Tailor</a>
+                                <a href="https://huntr.co/blog/best-job-search-sites-2026" target="_blank" rel="noopener noreferrer" class="flex-1 lg:flex-none text-center px-4 py-2 bg-teal-600 text-white font-bold text-sm rounded-md border border-transparent hover:bg-teal-700 transition-all shadow-sm">View 2026 Board Data</a>
+                            </div>
+                        </div>
+
                         <div class="overflow-x-auto">
                             <table class="min-w-full divide-y divide-stone-200">
                                 <thead class="bg-stone-50">
@@ -250,6 +289,18 @@
 
                     <!-- Communities View -->
                     <div id="view-communities" class="hidden">
+                        <!-- Strategic Tool Placement -->
+                        <div class="m-6 mb-0 bg-gradient-to-r from-teal-50 to-emerald-50 border border-teal-200 rounded-xl p-5 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 shadow-sm">
+                            <div>
+                                <h4 class="text-lg font-bold text-teal-900 flex items-center gap-2"><span>🎯</span> Maximize Your Callback Rate</h4>
+                                <p class="text-sm text-teal-700 mt-1 max-w-2xl">Don't just blindly apply on these boards. Match your experience perfectly to the job description requirements using our data-backed tools.</p>
+                            </div>
+                            <div class="flex flex-wrap gap-3 flex-shrink-0 w-full lg:w-auto">
+                                <a href="https://huntr.co/product/resume-tailor" target="_blank" rel="noopener noreferrer" class="flex-1 lg:flex-none text-center px-4 py-2 bg-white text-teal-700 font-bold text-sm rounded-md border border-teal-200 hover:bg-teal-50 hover:border-teal-300 transition-all shadow-sm">Try Resume Tailor</a>
+                                <a href="https://huntr.co/blog/best-job-search-sites-2026" target="_blank" rel="noopener noreferrer" class="flex-1 lg:flex-none text-center px-4 py-2 bg-teal-600 text-white font-bold text-sm rounded-md border border-transparent hover:bg-teal-700 transition-all shadow-sm">View 2026 Board Data</a>
+                            </div>
+                        </div>
+
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-6" id="communities-list">
                             <!-- Populated by JS -->
                         </div>
@@ -282,69 +333,115 @@
     <script>
         // --- DATASET (Simulated Research Data) ---
         const companies = [
-            // Newly Added & Updated Companies
-            { name: "Invisible Technologies", industry: "Operations", region: "Global WFA", desc: "Ranked #1 for true WFA; global operations.", website: "invisible.co" },
-            { name: "Wikimedia Foundation", industry: "Non-Profit", region: "Global WFA", desc: "Ranked #2 for true WFA.", website: "wikimediafoundation.org" },
-            { name: "Lumenalta", industry: "IT Consultancy", region: "Remote-Native", desc: "Highest volume remote-native poster (573 jobs).", website: "lumenalta.com" },
-            { name: "Contra", industry: "Hiring Platform", region: "Remote-Native", desc: "456 jobs posted; commission-free hiring focus.", website: "contra.com" },
-            { name: "Automattic", industry: "Tech", region: "Global WFA", desc: "1,900+ workers in 96 countries; location-agnostic pay.", website: "automattic.com" },
-            { name: "Toptal", industry: "IT Consulting", region: "Remote-Native", desc: "294 jobs; focuses on the top 2% of software developers.", website: "toptal.com" },
-            { name: "GitLab", industry: "DevOps", region: "Distributed", desc: "Pioneer in asynchronous, documented remote workflows.", website: "gitlab.com" },
-            { name: "Zapier", industry: "Automation", region: "Distributed", desc: "Global software developers; offers global team retreats.", website: "zapier.com" },
-            { name: "UnitedHealth Group", industry: "Healthcare", region: "US / Localized", desc: "High volume of Data Analysts and telehealth roles.", website: "uhg.com" },
-            { name: "Stripe", industry: "FinTech", region: "Distributed", desc: "Vast remote opportunities in engineering and compliance.", website: "stripe.com" },
-            { name: "Eqvilent", industry: "Tech / Data", region: "Global WFA", desc: "Ranked #3 for true WFA.", website: "eqvilent.com" },
-            { name: "CloudLinux", industry: "Enterprise Software", region: "Global WFA", desc: "Ranked #4 for true WFA.", website: "cloudlinux.com" },
-            { name: "Hotjar", industry: "Analytics", region: "Remote-Native", desc: "248 jobs posted.", website: "hotjar.com" },
-            { name: "TaxJar", industry: "FinTech", region: "Remote-Native", desc: "216 jobs posted.", website: "taxjar.com" },
-            { name: "Aha!", industry: "Product Mgmt", region: "Remote-Native", desc: "199 jobs posted; self-funded and profitable.", website: "aha.io" },
-            { name: "Remote.com", industry: "HR Tech", region: "Global WFA", desc: "Building AI-driven onboarding/compliance tools. Hires globally.", website: "remote.com" },
-            { name: "Oyster HR", industry: "HR Tech", region: "Global WFA", desc: "B-Corp scaling borderless hiring. Fully distributed across 70+ countries.", website: "oysterhr.com" },
-            { name: "Databricks", industry: "Data / ML", region: "Distributed", desc: "Heavy recruitment for Machine Learning Engineers, Cloud Architects, and Data Scientists.", website: "databricks.com" },
-            { name: "Linear", industry: "DevTools", region: "Remote-First", desc: "Design-forward software utilizing AI workflow summaries.", website: "linear.app" },
-            { name: "Hex", industry: "Analytics", region: "Remote-First", desc: "AI-assisted data storytelling. High demand for data engineers.", website: "hex.tech" },
-            { name: "Abnormal Security", industry: "Cybersecurity", region: "Remote-First", desc: "AI-native email protection. Actively hiring Account Executives & Threat Hunters.", website: "abnormalsecurity.com" },
-            { name: "Hinge Health", industry: "Healthcare", region: "Fully Distributed", desc: "The #1 Digital MSK clinic. Hires remote Doctors of Physical Therapy.", website: "hingehealth.com" },
-            { name: "Maven Clinic", industry: "Healthcare", region: "Remote-First", desc: "B2B virtual care. High remote employee satisfaction. Hires telehealth professionals.", website: "mavenclinic.com" },
-            { name: "Flock Safety", industry: "Public Safety", region: "Remote-First", desc: "Hardware/software for crime reduction. Seeking Threat Analysts.", website: "flocksafety.com" },
-            { name: "Affirm", industry: "FinTech", region: "Remote-First", desc: "Transparent consumer finance. Hiring Analytics Leads and Fraud Managers.", website: "affirm.com" },
-            { name: "Retool", industry: "DevTools", region: "Remote-First", desc: "Building AI-powered internal tools. Heavily recruits remote DevTools engineers.", website: "retool.com" },
-            { name: "Mozilla", industry: "Web", region: "Flexible / Distributed", desc: "Open-source internet advocacy. Hiring Founding GTM Leads and Systems Engineers.", website: "mozilla.org" },
-            { name: "Celonis", industry: "Enterprise Software", region: "International Remote", desc: "Global leader in process mining. Hiring SEO Managers and technical software reps globally.", website: "celonis.com" },
-            { name: "Coinbase", industry: "Crypto", region: "Fully Distributed", desc: "Institutional and retail crypto exchange. High-paying roles ($200k+).", website: "coinbase.com" },
-            { name: "Canonical", industry: "Open Source", region: "Fully Distributed", desc: "Cloud infrastructure and open-source operations. Hires globally for Linux engineering.", website: "canonical.com" },
-            { name: "Sardine", industry: "FinTech", region: "Remote-First", desc: "Real-time AI fraud prevention. Hires globally for credit underwriting.", website: "sardine.ai" },
-            { name: "TaxBit", industry: "Crypto", region: "Remote-First", desc: "High-speed response time to applications. Actively hiring B2B sales development.", website: "taxbit.com" },
-            { name: "Upwork", industry: "Freelance Network", region: "Remote-First", desc: "Scaling the distributed talent ecosystem. Continues to hire internally.", website: "upwork.com" },
-            { name: "Aurora Solar", industry: "Clean Tech", region: "Remote-First", desc: "Cloud software for solar PV engineering. Hires remote clean tech engineers.", website: "aurorasolar.com" },
-            
-            // Previously Existing Companies (Merged)
-            { name: "Doist", industry: "Productivity", region: "Worldwide", desc: "Makers of Todoist and Twist. Async-first culture.", website: "doist.com" },
-            { name: "Buffer", industry: "Social Media", region: "Worldwide", desc: "Social media management toolkit. Known for transparency.", website: "buffer.com" },
-            { name: "Basecamp", industry: "Project Mgmt", region: "Worldwide", desc: "Project management and team communication software.", website: "basecamp.com" },
-            { name: "Shopify", industry: "E-Commerce", region: "Digital by Design", desc: "Commerce platform. Announced 'Digital by Design' in 2020.", website: "shopify.com" },
-            { name: "Spotify", industry: "Music Streaming", region: "Work from Anywhere", desc: "Audio streaming provider allowing flexible work locations.", website: "spotify.com" },
-            { name: "Airbnb", industry: "Travel", region: "Live and Work Anywhere", desc: "Allows employees to live and work in 170+ countries.", website: "airbnb.com" },
-            { name: "Dropbox", industry: "Cloud Storage", region: "Virtual First", desc: "Virtual First model where remote work is the primary experience.", website: "dropbox.com" },
-            { name: "HubSpot", industry: "Marketing", region: "Hybrid/Remote", desc: "Offers specific remote-first job contracts.", website: "hubspot.com" },
-            { name: "Ghost", industry: "Publishing", region: "Worldwide", desc: "Non-profit open source publishing platform.", website: "ghost.org" },
-            { name: "InVision", industry: "Design", region: "Worldwide", desc: "Digital product design platform.", website: "invisionapp.com" },
-            { name: "DuckDuckGo", industry: "Search Engine", region: "Worldwide", desc: "Privacy-focused search engine.", website: "duckduckgo.com" },
-            { name: "Help Scout", industry: "Customer Service", region: "Worldwide", desc: "Customer support platform for growing teams.", website: "helpscout.com" },
-            { name: "ConvertKit", industry: "Marketing", region: "Worldwide", desc: "Creator marketing platform.", website: "convertkit.com" },
-            { name: "Elastic", industry: "Data / ML", region: "Distributed", desc: "The company behind Elasticsearch.", website: "elastic.co" },
-            { name: "Deel", industry: "HR Tech", region: "Worldwide", desc: "Global payroll and compliance platform built by a fully distributed team.", website: "deel.com" },
-            { name: "Webflow", industry: "Tech", region: "Worldwide", desc: "Visual web development platform with a strong remote culture.", website: "webflow.com" },
-            { name: "Toggl", industry: "Productivity", region: "Worldwide", desc: "Time tracking and planning tools, fully distributed globally.", website: "toggl.com" },
-            { name: "Yelp", industry: "Tech", region: "Remote-First", desc: "Transitioned to fully remote, closing most physical offices.", website: "yelp.com" },
-            { name: "Gumroad", industry: "E-Commerce", region: "Worldwide", desc: "Platform for creators. Famous for its 'no meetings' async culture.", website: "gumroad.com" },
-            { name: "Supabase", industry: "Tech / Data", region: "Worldwide", desc: "Open source Firebase alternative, fully remote team.", website: "supabase.com" },
-            { name: "PostHog", industry: "Analytics", region: "Worldwide", desc: "Open-source product OS. Handbooks and processes are public and remote.", website: "posthog.com" },
-            { name: "Articulate", industry: "E-Learning", region: "Worldwide", desc: "Creator of e-learning software, fully remote company.", website: "articulate.com" },
-            { name: "Skillshare", industry: "E-Learning", region: "Remote-First", desc: "Online learning community that transitioned to a remote-first model.", website: "skillshare.com" },
-            { name: "Vercel", industry: "DevOps", region: "Worldwide", desc: "Frontend cloud platform, highly distributed engineering team.", website: "vercel.com" },
-            { name: "Sourcegraph", industry: "DevOps", region: "Worldwide", desc: "Universal code search tool, operating as an all-remote company.", website: "sourcegraph.com" },
-            { name: "MailerLite", industry: "Marketing", region: "Worldwide", desc: "Email marketing tool built by a 100% remote global team.", website: "mailerlite.com" }
+            { name: "Invisible Technologies", industry: "Operations & AI Outsourcing", region: "Global WFA", desc: "Ranked #1 for true WFA; scales custom AI operations.", careerUrl: "https://invisible.co/careers/" },
+            { name: "Wikimedia Foundation", industry: "Non-Profit / Information", region: "Global WFA", desc: "Operates Wikipedia; deeply committed to open-source and global hiring.", careerUrl: "https://wikimediafoundation.org/about/jobs/" },
+            { name: "Lumenalta", industry: "IT Consultancy", region: "Global WFA", desc: "High-volume remote-native poster specializing in scalable software.", careerUrl: "https://lumenalta.com/remote-jobs" },
+            { name: "Contra", industry: "Hiring Platform", region: "Global WFA", desc: "Commission-free independent work platform built for creatives.", careerUrl: "https://contra.com/careers" },
+            { name: "Automattic", industry: "Tech (WordPress/Tumblr)", region: "Global WFA", desc: "1 900+ workers globally; offers strict location-agnostic pay scales.", careerUrl: "https://automattic.com/work-with-us/" },
+            { name: "Toptal", industry: "Management / IT Consulting", region: "Global WFA", desc: "Focuses exclusively on sourcing the top 2% of global freelance software developers.", careerUrl: "https://www.toptal.com/careers" },
+            { name: "GitLab", industry: "DevOps Platform", region: "Global WFA", desc: "The pioneer in asynchronous documented remote workflows for engineering.", careerUrl: "https://about.gitlab.com/jobs/" },
+            { name: "Zapier", industry: "Automation Software", region: "Global WFA", desc: "Automates workflows across thousands of apps; offers global team retreats.", careerUrl: "https://zapier.com/jobs" },
+            { name: "UnitedHealth Group", industry: "Healthcare", region: "US / Localized", desc: "High volume of US remote hiring for Data Analysts and telehealth roles.", careerUrl: "https://careers.unitedhealthgroup.com/" },
+            { name: "Stripe", industry: "FinTech / SaaS", region: "Global / Distributed", desc: "Vast remote opportunities in engineering compliance and global finance.", careerUrl: "https://stripe.com/jobs" },
+            { name: "Eqvilent", industry: "Technology / Data", region: "Global WFA", desc: "Data-driven tech firm with no geographic hiring restrictions.", careerUrl: "https://www.eqvilent.com/careers" },
+            { name: "CloudLinux", industry: "Enterprise Software", region: "Global WFA", desc: "Builds secure Linux operating systems with a fully distributed team.", careerUrl: "https://cloudlinux.com/careers/" },
+            { name: "Hotjar", industry: "Product Insights SaaS", region: "EMEA / Americas", desc: "Heatmaps and behavior analytics; strong remote culture across multiple time zones.", careerUrl: "https://careers.hotjar.com/" },
+            { name: "TaxJar", industry: "Tax Compliance SaaS", region: "US Remote", desc: "Automates sales tax for ecommerce; fully distributed team.", careerUrl: "https://www.taxjar.com/jobs" },
+            { name: "Aha!", industry: "Product Development SaaS", region: "Global WFA", desc: "Self-funded highly profitable product roadmap software.", careerUrl: "https://www.aha.io/company/careers" },
+            { name: "Remote.com", industry: "Global HR & Payroll", region: "Global WFA", desc: "Builds AI-driven global compliance tools; hires globally across all departments.", careerUrl: "https://remote.com/careers" },
+            { name: "Oyster HR", industry: "Global Employment", region: "Global WFA", desc: "B-Corp scaling borderless hiring; fully distributed across 70+ countries.", careerUrl: "https://www.oysterhr.com/careers" },
+            { name: "Databricks", industry: "Data & Machine Learning", region: "Distributed", desc: "Heavy recruitment for Machine Learning Engineers and Data Scientists.", careerUrl: "https://databricks.com/company/careers" },
+            { name: "Linear", industry: "DevTools / Project Mgmt", region: "Global Remote", desc: "Design-forward software utilizing AI workflow summaries.", careerUrl: "https://linear.app/careers" },
+            { name: "Hex", industry: "Collaborative Analytics", region: "US / Americas", desc: "AI-assisted data storytelling; high demand for data engineers.", careerUrl: "https://hex.tech/careers" },
+            { name: "Abnormal Security", industry: "Cybersecurity", region: "US / Remote", desc: "AI-native email protection; active hiring for Threat Hunters and AEs.", careerUrl: "https://abnormalsecurity.com/careers" },
+            { name: "Hinge Health", industry: "Digital Healthcare", region: "US Remote", desc: "The #1 Digital MSK clinic; hires remote Doctors of Physical Therapy.", careerUrl: "https://www.hingehealth.com/careers/" },
+            { name: "Maven Clinic", industry: "Digital Family Health", region: "US Remote", desc: "B2B virtual care with exceptionally high remote employee satisfaction.", careerUrl: "https://www.mavenclinic.com/careers" },
+            { name: "Flock Safety", industry: "Public Safety Tech", region: "US Remote", desc: "Hardware/software for crime reduction; seeking Staff ML Engineers.", careerUrl: "https://www.flocksafety.com/careers" },
+            { name: "Affirm", industry: "FinTech", region: "Americas / Remote", desc: "Transparent consumer finance; hiring Full Stack Analytics Leads.", careerUrl: "https://www.affirm.com/careers" },
+            { name: "Retool", industry: "Internal Software Dev", region: "Americas / Remote", desc: "Builds AI-powered internal tools; heavily recruits remote DevTools engineers.", careerUrl: "https://retool.com/careers" },
+            { name: "Mozilla", industry: "Web & Privacy", region: "Global Distributed", desc: "Open-source internet advocacy; hiring Founding GTM Leads and Systems Engineers.", careerUrl: "https://careers.mozilla.org/" },
+            { name: "Celonis", industry: "Enterprise Software", region: "Global Remote", desc: "Global leader in process mining; hiring technical software reps globally.", careerUrl: "https://www.celonis.com/careers/" },
+            { name: "Coinbase", industry: "Cryptocurrency / Web3", region: "Global Distributed", desc: "Institutional crypto exchange; high-paying roles for Security Engineers.", careerUrl: "https://www.coinbase.com/careers" },
+            { name: "Canonical", industry: "Open Source / Ubuntu", region: "Global WFA", desc: "Cloud infrastructure operations; hires globally for Linux kernel development.", careerUrl: "https://canonical.com/careers" },
+            { name: "Sardine", industry: "FinTech / Compliance", region: "Global Remote", desc: "Real-time AI fraud prevention; hires globally for credit underwriting.", careerUrl: "https://www.sardine.ai/careers" },
+            { name: "TaxBit", industry: "Crypto Tax & Accounting", region: "US Remote", desc: "High-speed application response; actively hiring regulatory compliance experts.", careerUrl: "https://taxbit.com/careers" },
+            { name: "Upwork", industry: "Freelance Marketplace", region: "Global Remote", desc: "Scales the distributed talent ecosystem; hires for platform engineering.", careerUrl: "https://www.upwork.com/careers" },
+            { name: "Aurora Solar", industry: "Clean Tech / SaaS", region: "US / Remote", desc: "Cloud software for solar PV engineering; hires clean tech engineers.", careerUrl: "https://www.aurorasolar.com/careers" },
+            { name: "Deel", industry: "Global HR & Payroll", region: "Global WFA", desc: "High-growth platform enabling global hiring; heavy recruiter of LATAM talent.", careerUrl: "https://www.deel.com/careers/" },
+            { name: "Buffer", industry: "Social Media", region: "Global WFA", desc: "Pioneer in transparent location-independent salaries and 4-day workweeks.", careerUrl: "https://buffer.com/journey" },
+            { name: "Doist", industry: "Productivity", region: "Global WFA", desc: "Creators of Todoist; highly asynchronous zero-office culture.", careerUrl: "https://doist.com/careers" },
+            { name: "Ghost", industry: "Publishing SaaS", region: "Global WFA", desc: "Open-source publishing platform operating entirely non-profit and fully remote.", careerUrl: "https://ghost.org/careers/" },
+            { name: "Gumroad", industry: "Creator Economy", region: "Global WFA", desc: "E-commerce for creators; minimal meetings heavily asynchronous engineering.", careerUrl: "https://gumroad.com/jobs" },
+            { name: "Basecamp", industry: "Project Management", region: "Global WFA", desc: "The original remote work advocates.", careerUrl: "https://basecamp.com/about/jobs" },
+            { name: "Hubstaff", industry: "Time Tracking", region: "Global WFA", desc: "Remote workforce management software built by a 100% remote team.", careerUrl: "https://hubstaff.com/jobs" },
+            { name: "GitHub", industry: "DevOps / Code Hosting", region: "Global Distributed", desc: "Microsoft-owned but operates with massive remote autonomy for developers.", careerUrl: "https://github.com/about/careers" },
+            { name: "Shopify", industry: "E-commerce", region: "Americas / EMEA", desc: "Digital by Design workforce heavily focused on North and South American time zones.", careerUrl: "https://www.shopify.com/careers" },
+            { name: "Atlassian", industry: "Enterprise Software", region: "Global Distributed", desc: "Team Anywhere policy allowing employees to work from any eligible country.", careerUrl: "https://www.atlassian.com/company/careers" },
+            { name: "Dropbox", industry: "Cloud Storage", region: "Global Distributed", desc: "Virtual First company design; primary work happens asynchronously.", careerUrl: "https://jobs.dropbox.com/" },
+            { name: "Kraken", industry: "Cryptocurrency", region: "Global WFA", desc: "High-security crypto exchange hiring talent globally with extreme privacy focus.", careerUrl: "https://www.kraken.com/careers" },
+            { name: "Chainlink Labs", industry: "Web3 / Blockchain", region: "Global WFA", desc: "Decentralized oracle networks; massive employer for global Web3 engineers.", careerUrl: "https://chainlinklabs.com/careers" },
+            { name: "Turing", industry: "HR Tech / Sourcing", region: "Global WFA", desc: "AI-backed platform sourcing remote developers; heavy footprint in emerging markets.", careerUrl: "https://www.turing.com/careers" },
+            { name: "FlexJobs", industry: "Job Board", region: "US Remote", desc: "Operates a fully remote team to curate and manage its premium job database.", careerUrl: "https://www.flexjobs.com/about/careers" },
+            { name: "Teal", industry: "Career & Job Search Tech", region: "US / Americas", desc: "Career growth platform offering advanced resume tools for modern job seekers.", careerUrl: "https://www.tealhq.com/careers" },
+            { name: "Lattice", industry: "HR & Performance", region: "Americas / Remote", desc: "People management platform leaning heavily into remote-first HR solutions.", careerUrl: "https://lattice.com/careers" },
+            { name: "15Five", industry: "HR Tech", region: "US / EMEA", desc: "Performance management software with a deeply ingrained distributed culture.", careerUrl: "https://www.15five.com/about/careers/" },
+            { name: "CultureAmp", industry: "HR Tech", region: "Global Remote", desc: "Employee experience platform hiring across global hubs remotely.", careerUrl: "https://www.cultureamp.com/about/careers" },
+            { name: "Trace Genomics", industry: "AgTech / Biotech", region: "US Remote", desc: "Digitizes soil biology; heavily hires remote data scientists and agricultural experts.", careerUrl: "https://tracegenomics.com/careers/" },
+            { name: "Indigo Ag", industry: "AgTech", region: "US Remote", desc: "Leverages science and technology to improve agricultural sustainability.", careerUrl: "https://www.indigoag.com/careers" },
+            { name: "Farmers Business Network", industry: "AgTech", region: "Americas Remote", desc: "Ag-tech platform supporting family farmers; massive remote engineering presence.", careerUrl: "https://www.fbn.com/careers" },
+            { name: "Pachama", industry: "Climate Tech / Carbon", region: "Americas", desc: "Uses AI/satellite data to verify forest carbon credits; strong presence in LATAM.", careerUrl: "https://pachama.com/careers" },
+            { name: "Nori", industry: "Climate Tech", region: "US Remote", desc: "Blockchain-backed carbon removal marketplace with a fully distributed team.", careerUrl: "https://nori.com/careers" },
+            { name: "Watershed", industry: "Climate Tech", region: "US / UK Remote", desc: "Enterprise climate platform helping companies measure and reduce footprints.", careerUrl: "https://watershed.com/careers" },
+            { name: "Brex", industry: "FinTech", region: "Americas / Remote", desc: "Corporate cards and spend management; remote-first across North and South America.", careerUrl: "https://www.brex.com/careers" },
+            { name: "Ebanx", industry: "FinTech", region: "LATAM / Global", desc: "Payment solutions bridging global tech with the Latin American market.", careerUrl: "https://business.ebanx.com/en/careers" },
+            { name: "Auth0 (by Okta)", industry: "Identity Security", region: "Global Distributed", desc: "High-volume remote hirer for identity and access management engineering.", careerUrl: "https://auth0.com/careers" },
+            { name: "Vercel", industry: "Web Development", region: "Global Distributed", desc: "Creators of Next.js; massive remote footprint for frontend and edge engineers.", careerUrl: "https://vercel.com/careers" },
+            { name: "Figma", industry: "Design Software", region: "Americas / EMEA", desc: "Collaborative interface design tool with highly flexible remote hubs.", careerUrl: "https://www.figma.com/careers/" },
+            { name: "Elastic", industry: "Search & Data", region: "Global WFA", desc: "Creators of Elasticsearch; distributed by design since inception.", careerUrl: "https://www.elastic.co/about/careers" },
+            { name: "MongoDB", industry: "Database", region: "Global Distributed", desc: "Modern general-purpose database platform with extensive remote options.", careerUrl: "https://www.mongodb.com/careers" },
+            { name: "Redis", industry: "Database", region: "Global Distributed", desc: "In-memory data store heavily reliant on global open-source contributors.", careerUrl: "https://redis.com/company/careers/" },
+            { name: "HashiCorp", industry: "Cloud Ops", region: "Global Distributed", desc: "Infrastructure-as-code pioneers; fully distributed engineering culture.", careerUrl: "https://www.hashicorp.com/careers" },
+            { name: "DuckDuckGo", industry: "Search Engine", region: "Global WFA", desc: "Privacy-focused search engine operating entirely without physical offices.", careerUrl: "https://duckduckgo.com/hiring" },
+            { name: "Articulate", industry: "EdTech", region: "US Remote", desc: "E-learning software creators operating fully remotely since 2002.", careerUrl: "https://articulate.com/company/careers" },
+            { name: "Coursera", industry: "EdTech", region: "Global Distributed", desc: "Massive open online course provider with a strong remote-first culture.", careerUrl: "https://about.coursera.org/careers/" },
+            { name: "Udemy", industry: "EdTech", region: "Global Distributed", desc: "Skills marketplace hiring remote educators engineers and product managers.", careerUrl: "https://about.udemy.com/careers/" },
+            { name: "Skillshare", industry: "EdTech", region: "US / Americas", desc: "Online learning community operating a fully distributed workforce.", careerUrl: "https://www.skillshare.com/careers" },
+            { name: "MasterClass", industry: "EdTech", region: "US Remote", desc: "Premium online classes with flexible remote production and engineering roles.", careerUrl: "https://careers.masterclass.com/" },
+            { name: "Webflow", industry: "Web Design", region: "Global Distributed", desc: "No-code visual web builder with a highly transparent remote work policy.", careerUrl: "https://webflow.com/careers" },
+            { name: "Netlify", industry: "Web Development", region: "Global Distributed", desc: "Cloud computing platform offering edge architecture; fully remote team.", careerUrl: "https://www.netlify.com/careers/" },
+            { name: "Gatsby", industry: "Web Development", region: "Global WFA", desc: "React-based open-source framework with a borderless hiring approach.", careerUrl: "https://www.gatsbyjs.com/careers/" },
+            { name: "Contentful", industry: "Headless CMS", region: "EMEA / Americas", desc: "API-first content platform operating remotely across Europe and the Americas.", careerUrl: "https://www.contentful.com/careers/" },
+            { name: "Sanity", industry: "Headless CMS", region: "Global Distributed", desc: "Content operating system with a strong remote engineering presence.", careerUrl: "https://www.sanity.io/careers" },
+            { name: "Strapi", industry: "Headless CMS", region: "Global WFA", desc: "Open-source Node.js CMS operating globally with a remote-native team.", careerUrl: "https://strapi.io/careers" },
+            { name: "Algolia", industry: "Search & Discovery", region: "Global Distributed", desc: "API platform for dynamic search heavily hiring remote backend engineers.", careerUrl: "https://www.algolia.com/careers/" },
+            { name: "Plaid", industry: "FinTech", region: "US / UK / Remote", desc: "Connects financial apps to banks; flexible remote-first engineering pods.", careerUrl: "https://plaid.com/careers/" },
+            { name: "Chime", industry: "FinTech", region: "US Remote", desc: "Mobile banking app offering significant remote flexibility for core tech roles.", careerUrl: "https://www.chime.com/careers/" },
+            { name: "Robinhood", industry: "FinTech", region: "US Remote", desc: "Commission-free investing app operating a Remote First work model.", careerUrl: "https://careers.robinhood.com/" },
+            { name: "Wealthfront", industry: "FinTech", region: "US Remote", desc: "Automated investment service with a deeply embedded remote engineering team.", careerUrl: "https://www.wealthfront.com/careers" },
+            { name: "Betterment", industry: "FinTech", region: "US Remote", desc: "Smart money management platform hiring remote finance and tech talent.", careerUrl: "https://www.betterment.com/careers" },
+            { name: "Carta", industry: "FinTech / Equity", region: "Global Distributed", desc: "Cap table management; extensive remote hiring across engineering and sales.", careerUrl: "https://carta.com/careers/" },
+            { name: "Gusto", industry: "HR Tech / Payroll", region: "US Remote", desc: "Payroll and benefits platform operating highly distributed teams across the US.", careerUrl: "https://gusto.com/about/careers" },
+            { name: "Rippling", industry: "HR & IT Tech", region: "Global Distributed", desc: "Workforce management platform aggressively hiring remote engineering talent.", careerUrl: "https://www.rippling.com/careers" },
+            { name: "Notion", industry: "Productivity", region: "Global Distributed", desc: "Connected workspace for wikis and projects; strong remote-friendly culture.", careerUrl: "https://www.notion.so/careers" },
+            { name: "Airtable", industry: "Productivity", region: "US / UK / Remote", desc: "Low-code platform for building collaborative apps; flexible remote roles.", careerUrl: "https://airtable.com/careers" },
+            { name: "Asana", industry: "Productivity", region: "Global Distributed", desc: "Work management platform offering highly flexible distributed work options.", careerUrl: "https://asana.com/jobs" },
+            { name: "Monday.com", industry: "Productivity", region: "Global Distributed", desc: "Work OS operating remotely across multiple international hubs.", careerUrl: "https://monday.com/careers" },
+            { name: "Smartsheet", industry: "Productivity", region: "US Remote", desc: "Enterprise work management with a robust remote workforce.", careerUrl: "https://www.smartsheet.com/careers" },
+            { name: "Miro", industry: "Visual Collaboration", region: "Global Distributed", desc: "Online whiteboarding platform relying heavily on cross-timezone remote talent.", careerUrl: "https://miro.com/careers/" },
+            { name: "Mural", industry: "Visual Collaboration", region: "Global WFA", desc: "Digital workspace for visual collaboration operating 100% remotely.", careerUrl: "https://www.mural.co/careers" },
+            { name: "Canva", industry: "Design Software", region: "Global Distributed", desc: "Massive Australian design giant offering extreme flexibility and remote work.", careerUrl: "https://www.canva.com/careers/" },
+            { name: "Spotify", industry: "Audio Streaming", region: "Global WFA", desc: "Operates a Work from Anywhere policy allowing country-agnostic relocation.", careerUrl: "https://www.lifeatspotify.com/" },
+            { name: "Netflix", industry: "Entertainment", region: "US / Remote", desc: "Highly autonomous culture offering extensive remote flexibility for tech roles.", careerUrl: "https://jobs.netflix.com/" },
+            { name: "Yelp", industry: "Reviews / Local", region: "US Remote", desc: "Transitioned to a fully remote workforce closing major domestic offices.", careerUrl: "https://www.yelp.careers/" },
+            { name: "Zillow", industry: "Real Estate Tech", region: "US Remote", desc: "Operates a Cloud-HQ model giving employees total geographic flexibility.", careerUrl: "https://careers.zillowgroup.com/" },
+            { name: "Redfin", industry: "Real Estate Tech", region: "US Remote", desc: "Tech-powered brokerage offering remote options for engineering and ops.", careerUrl: "https://www.redfin.com/about/jobs" },
+            { name: "Airbnb", industry: "Travel / Hospitality", region: "Global WFA", desc: "Allows employees to live and work anywhere globally without compensation changes.", careerUrl: "https://careers.airbnb.com/" },
+            { name: "Hopper", industry: "Travel Tech", region: "Global WFA", desc: "Mobile-first travel agency operating 100% remotely across the globe.", careerUrl: "https://hopper.com/careers" },
+            { name: "Skyscanner", industry: "Travel Tech", region: "Global Distributed", desc: "Flight discovery engine with a flexible highly distributed international team.", careerUrl: "https://www.skyscanner.net/jobs/" },
+            { name: "Eventbrite", industry: "Event Management", region: "Global Distributed", desc: "Ticketing platform offering a flexible living room to boardroom work policy.", careerUrl: "https://www.eventbritecareers.com/" },
+            { name: "PagerDuty", industry: "DevOps / IT Ops", region: "Global Distributed", desc: "Incident response platform hiring remote engineers to maintain 24/7 coverage.", careerUrl: "https://www.pagerduty.com/careers/" },
+            { name: "Twilio", industry: "Cloud Comms", region: "Global Distributed", desc: "Customer engagement platform with a massive globally distributed remote workforce.", careerUrl: "https://www.twilio.com/company/jobs" },
+            { name: "Help Scout", industry: "Customer Support", region: "Global WFA", desc: "Certified B-Corp building support tools with a passionate 100% remote team.", careerUrl: "https://www.helpscout.com/company/careers/" }
         ];
 
         const jobBoards = [
@@ -493,7 +590,7 @@
                             </div>
                             <div class="ml-4">
                                 <div class="text-sm font-medium text-stone-900">${item.name}</div>
-                                <div class="text-sm text-stone-500 hover:text-teal-600 hover:underline cursor-pointer"><a href="https://${item.website}" target="_blank" rel="noopener noreferrer">${item.website}</a></div>
+                                <div class="text-sm text-stone-500 hover:text-teal-600 hover:underline cursor-pointer"><a href="${item.careerUrl}" target="_blank" rel="noopener noreferrer">Careers Page &rarr;</a></div>
                             </div>
                         </div>
                     </td>
@@ -603,6 +700,7 @@
 
             const industryLabels = Object.keys(industries);
             const industryCtx = document.getElementById('industryChart').getContext('2d');
+            const isMobile = window.innerWidth < 768;
             const industryChart = new Chart(industryCtx, {
                 type: 'doughnut',
                 data: {
@@ -618,6 +716,32 @@
                             '#ccfbf1', // teal-100
                             '#e7e5e4', // stone-200
                             '#d6d3d1', // stone-300
+                            '#a8a29e', // stone-400
+                            '#78716c', // stone-500
+                            '#57534e', // stone-600
+                            '#f59e0b', // amber-500
+                            '#fbbf24', // amber-400
+                            '#fcd34d', // amber-300
+                            '#fde68a', // amber-200
+                            '#059669', // emerald-600
+                            '#34d399', // emerald-400
+                            '#6ee7b7', // emerald-300
+                            '#a7f3d0', // emerald-200
+                            '#0284c7', // sky-600
+                            '#38bdf8', // sky-400
+                            '#7dd3fc', // sky-300
+                            '#bae6fd', // sky-200
+                            '#7c3aed', // violet-600
+                            '#a78bfa', // violet-400
+                            '#c4b5fd', // violet-300
+                            '#ddd6fe', // violet-200
+                            '#db2777', // pink-600
+                            '#f472b6', // pink-400
+                            '#f9a8d4', // pink-300
+                            '#fbcfe8', // pink-200
+                            '#ea580c', // orange-600
+                            '#fb923c', // orange-400
+                            '#fdba74', // orange-300
                         ],
                         borderWidth: 0
                     }]
@@ -632,10 +756,22 @@
                         }
                     },
                     plugins: {
-                        legend: { position: 'right', labels: { boxWidth: 12, font: { size: 10 } } },
-                        tooltip: { backgroundColor: '#1c1917', padding: 12 } // stone-900
+                        legend: {
+                            position: isMobile ? 'bottom' : 'right',
+                            labels: {
+                                boxWidth: isMobile ? 10 : 12,
+                                padding: isMobile ? 6 : 10,
+                                font: { size: isMobile ? 9 : 10 }
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: '#1c1917',
+                            padding: 12,
+                            titleFont: { size: isMobile ? 11 : 13 },
+                            bodyFont: { size: isMobile ? 11 : 13 }
+                        }
                     },
-                    layout: { padding: 10 }
+                    layout: { padding: isMobile ? 4 : 10 }
                 }
             });
 
@@ -670,16 +806,68 @@
                         }
                     },
                     scales: {
-                        y: { beginAtZero: true, grid: { color: '#f5f5f4' } },
-                        x: { grid: { display: false } }
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: '#f5f5f4' },
+                            ticks: { font: { size: isMobile ? 10 : 12 } }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: {
+                                font: { size: isMobile ? 9 : 11 },
+                                maxRotation: isMobile ? 45 : 40,
+                                minRotation: isMobile ? 25 : 20,
+                                autoSkip: false,
+                                callback: function(value) {
+                                    const label = this.getLabelForValue(value);
+                                    if (isMobile && label.length > 14) {
+                                        return label.substring(0, 12) + '...';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
                     },
                     plugins: {
                         legend: { display: false },
-                        tooltip: { backgroundColor: '#1c1917', padding: 12 }
+                        tooltip: {
+                            backgroundColor: '#1c1917',
+                            padding: 12,
+                            titleFont: { size: isMobile ? 11 : 13 },
+                            bodyFont: { size: isMobile ? 11 : 13 }
+                        }
                     }
                 }
             });
         }
+
+        // Responsive chart resize handler
+        let resizeTimeout;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(function() {
+                const nowMobile = window.innerWidth < 768;
+                const industryChartInstance = Chart.getChart('industryChart');
+                const boardChartInstance = Chart.getChart('boardTypeChart');
+
+                if (industryChartInstance) {
+                    industryChartInstance.options.plugins.legend.position = nowMobile ? 'bottom' : 'right';
+                    industryChartInstance.options.plugins.legend.labels.boxWidth = nowMobile ? 10 : 12;
+                    industryChartInstance.options.plugins.legend.labels.padding = nowMobile ? 6 : 10;
+                    industryChartInstance.options.plugins.legend.labels.font.size = nowMobile ? 9 : 10;
+                    industryChartInstance.options.layout.padding = nowMobile ? 4 : 10;
+                    industryChartInstance.update();
+                }
+
+                if (boardChartInstance) {
+                    boardChartInstance.options.scales.x.ticks.maxRotation = nowMobile ? 45 : 40;
+                    boardChartInstance.options.scales.x.ticks.minRotation = nowMobile ? 25 : 20;
+                    boardChartInstance.options.scales.x.ticks.font.size = nowMobile ? 9 : 11;
+                    boardChartInstance.options.scales.y.ticks.font.size = nowMobile ? 10 : 12;
+                    boardChartInstance.update();
+                }
+            }, 250);
+        });
 
         // Run Init
         init();
